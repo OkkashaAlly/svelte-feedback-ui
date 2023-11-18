@@ -1,22 +1,21 @@
 <script>
-  import { createEventDispatcher } from "svelte";
+  import { feedbackList } from "../store";
   import Card from "./Card.svelte";
 
   export let item;
 
-  const dispatch = createEventDispatcher()
-
-  const handleDelete = (itemId) => {
-    dispatch("delete-feedback", itemId)
-    
-  }
+  const handleDelete = itemId => {
+    feedbackList.update(currentData =>
+      currentData.filter(item => item.id !== itemId)
+    );
+  };
 </script>
 
 <Card>
   <div class="num-display">
     {item.rating}
   </div>
-  <button class="close" on:click={()=> handleDelete(item.id)}>X</button>
+  <button class="close" on:click={() => handleDelete(item.id)}>X</button>
   <p class="text-display">
     {item.text}
   </p>
